@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, Suspense } from "react";
 import { GenerativeArtScene } from "@/components/ui/anomalous-matter-hero";
+import nirvanaLogo from "/nirvana-logo.svg";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -70,7 +71,7 @@ function App() {
 
           <div className="mb-4">
             <img
-              src="/nirvana-logo.svg"
+              src={nirvanaLogo}
               alt="Nirvana"
               className="h-5 mx-auto opacity-60"
             />
