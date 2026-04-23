@@ -90,6 +90,7 @@ export default function App() {
   }, [step, paused])
 
   useEffect(() => {
+    if (step <= STEPS.USER_REPLY) return
     setTimeout(() => {
       endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
     }, 150)
@@ -157,7 +158,7 @@ export default function App() {
         {/* User reply */}
         {step >= STEPS.USER_REPLY && (
           <AnimateIn style={{ alignSelf: 'flex-end' }}>
-            <div className="msg-user">yes please</div>
+            <div className="msg-user" style={{ whiteSpace: 'nowrap' }}>yes please</div>
           </AnimateIn>
         )}
 
@@ -200,7 +201,7 @@ export default function App() {
         )}
 
         {/* Bottom spacer — keeps room to scroll before content pushes layout */}
-        <div ref={endRef} style={{ minHeight: '60vh', flexShrink: 0 }} />
+        <div ref={endRef} style={{ minHeight: '30vh', flexShrink: 0 }} />
       </div>
 
       {/* Input bar */}
