@@ -47,9 +47,9 @@ function AnimateIn({ children, delay = 0, style }) {
 
   return (
     <div style={{
-      transition: 'all 0.5s ease-out',
+      transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
       opacity: visible ? 1 : 0,
-      transform: visible ? 'translateY(0)' : 'translateY(16px)',
+      transform: visible ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.92)',
       ...style,
     }}>
       {children}

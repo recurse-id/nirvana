@@ -1,5 +1,19 @@
+import { useState, useEffect } from 'react'
 import { ChevronRight, LockIcon, NirvanaLogo } from './Icons'
 import TapRipple from './TapRipple'
+
+function CvvDots({ active }) {
+  const [count, setCount] = useState(0)
+  useEffect(() => {
+    if (!active) { setCount(0); return }
+    if (count >= 3) return
+    const t = setTimeout(() => setCount(c => c + 1), 150)
+    return () => clearTimeout(t)
+  }, [active, count])
+
+  if (!active || count === 0) return null
+  return <>{'•'.repeat(count)}</>
+}
 
 export default function PaymentSheet({ cvvFilled, onConfirm, showTap }) {
   return (
@@ -46,7 +60,7 @@ export default function PaymentSheet({ cvvFilled, onConfirm, showTap }) {
         <div className="cvv-section">
           <div className="cvv-label">CVV</div>
           <div className={`cvv-input${cvvFilled ? ' active' : ''}`} style={{ position: 'relative', overflow: 'hidden' }}>
-            <span className="cvv-dots" style={{ opacity: cvvFilled ? 1 : 0 }}>•••</span>
+            <span className="cvv-dots"><CvvDots active={cvvFilled} /></span>
             <LockIcon />
             {showTap && !cvvFilled && <TapRipple />}
           </div>
