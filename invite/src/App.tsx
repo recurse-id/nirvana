@@ -1,0 +1,172 @@
+import { useState, Suspense } from "react";
+import { GenerativeArtScene } from "@/components/ui/anomalous-matter-hero";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+function App() {
+  const [open, setOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  return (
+    <div className="relative min-h-screen bg-background text-foreground overflow-hidden">
+      <Suspense fallback={<div className="w-full h-full bg-background" />}>
+        <GenerativeArtScene />
+      </Suspense>
+
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30 z-10" />
+
+      <div className="relative z-20 flex flex-col items-center justify-center min-h-screen px-6">
+        <div
+          className="max-w-2xl mx-auto text-center"
+          style={{ animation: "fadeIn 1s ease-out forwards" }}
+        >
+          <div className="mb-8">
+            <div
+              className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
+            >
+              <span className="text-xs font-mono tracking-[0.25em] uppercase text-white/50">
+                By Invitation Only
+              </span>
+            </div>
+          </div>
+
+          <p className="text-sm font-mono tracking-[0.2em] uppercase text-white/40 mb-4">
+            Nirvana presents
+          </p>
+
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.1]">
+            Healthcare AI
+            <br />
+            <span className="font-normal bg-gradient-to-r from-blue-300 via-sky-200 to-blue-400 bg-clip-text text-transparent">
+              Executive Dinner
+            </span>
+          </h1>
+
+          <div
+            className="mt-10 max-w-lg mx-auto"
+            style={{ animation: "fadeInSlow 1.2s ease-out 0.3s both" }}
+          >
+            <p className="text-base sm:text-lg text-white/60 leading-relaxed">
+              Join CFOs, RCM leaders, alongside AI leaders from OpenAI, Anthropic
+              and more at this intimate dinner to trade notes and discuss how to
+              improve healthcare revenue operations.
+            </p>
+          </div>
+
+          <div
+            className="mt-12 flex flex-col items-center gap-6"
+            style={{ animation: "fadeInSlow 1.2s ease-out 0.5s both" }}
+          >
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-sm font-mono tracking-wider uppercase text-white/40">
+              <span>July 23, 2025</span>
+              <span className="hidden sm:block w-1 h-1 rounded-full bg-white/20" />
+              <span>3:00 PM &ndash; 9:00 PM</span>
+              <span className="hidden sm:block w-1 h-1 rounded-full bg-white/20" />
+              <span>New York City</span>
+            </div>
+
+            <Button
+              onClick={() => setOpen(true)}
+              size="lg"
+              className="mt-4 relative px-10 py-6 text-sm font-mono tracking-[0.15em] uppercase bg-white text-black hover:bg-white/90 rounded-full transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] cursor-pointer"
+            >
+              RSVP
+            </Button>
+
+            <p className="text-xs font-mono text-white/25 tracking-wider">
+              Please RSVP by May 15, 2025
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="bg-black/95 border border-white/10 backdrop-blur-xl sm:max-w-md">
+          {!submitted ? (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-xl font-light tracking-tight text-white">
+                  Reserve Your Seat
+                </DialogTitle>
+                <DialogDescription className="text-white/50 text-sm">
+                  15 seats only. Confirm your attendance for July 23.
+                </DialogDescription>
+              </DialogHeader>
+              <form onSubmit={handleSubmit} className="mt-4 space-y-5">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="name"
+                    className="text-xs font-mono tracking-wider uppercase text-white/40"
+                  >
+                    Full Name
+                  </Label>
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    placeholder="Your name"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-white/30 focus:ring-white/10"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="email"
+                    className="text-xs font-mono tracking-wider uppercase text-white/40"
+                  >
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="you@company.com"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-white/30 focus:ring-white/10"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full py-5 text-sm font-mono tracking-[0.15em] uppercase bg-white text-black hover:bg-white/90 rounded-full cursor-pointer"
+                >
+                  Confirm RSVP
+                </Button>
+              </form>
+            </>
+          ) : (
+            <div className="py-8 text-center">
+              <div className="mb-4 text-4xl">&#10003;</div>
+              <DialogTitle className="text-xl font-light tracking-tight text-white mb-2">
+                You&apos;re Confirmed
+              </DialogTitle>
+              <p className="text-white/50 text-sm">
+                We&apos;ll send details to {email} shortly.
+              </p>
+              <p className="mt-4 text-white/30 text-xs font-mono tracking-wider">
+                July 23 &middot; 3 PM &ndash; 9 PM &middot; NYC
+              </p>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+export default App;

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-for app in pt-checkin clear1 clear1-demo health-ai wallet-e2e; do
+for app in pt-checkin clear1 clear1-demo health-ai wallet-e2e invite; do
   cd "$app" && npm install && npm run build && cd ..
 done
 
@@ -11,3 +11,6 @@ done
 
 mkdir -p "dist/amazon"
 cp -r "health-ai/dist/"* "dist/amazon/"
+
+mkdir -p "dist/invite"
+cp -r "invite/dist/"* "dist/invite/"
