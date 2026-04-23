@@ -39,17 +39,22 @@ function Typewriter({ text, speed = 8, onDone }) {
 }
 
 function AnimateIn({ children, delay = 0, style }) {
+  const [mounted, setMounted] = useState(false)
   const [visible, setVisible] = useState(false)
   useEffect(() => {
-    const t = setTimeout(() => setVisible(true), delay)
-    return () => clearTimeout(t)
-  }, [delay])
+    requestAnimationFrame(() => {
+      setMounted(true)
+      const t = setTimeout(() => setVisible(true), Math.max(delay, 30))
+      return () => clearTimeout(t)
+    })
+  }, [])
 
   return (
     <div style={{
-      transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+      transition: mounted ? 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)' : 'none',
       opacity: visible ? 1 : 0,
       transform: visible ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.92)',
+      transformOrigin: 'bottom right',
       ...style,
     }}>
       {children}
