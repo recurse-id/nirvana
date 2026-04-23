@@ -70,25 +70,28 @@
   .logo-glyph {
     width: 32px;
     height: 32px;
-    background: #0F766E;
-    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 0 12px rgba(15,118,110,0.4);
   }
 
-  .logo-glyph svg {
-    width: 18px;
-    height: 18px;
+  .logo-glyph img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .logo-wordmark {
-    font-size: 15px;
-    font-weight: 600;
-    color: #f9fafb;
-    letter-spacing: -0.01em;
+    height: 13px;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-wordmark img {
+    height: 100%;
+    width: auto;
+    filter: brightness(0) invert(1);
   }
 
   .sidebar-section {
@@ -799,12 +802,9 @@
     <div class="sidebar">
       <div class="sidebar-logo">
         <div class="logo-glyph">
-          <!-- N glyph -->
-          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.5 14V4L9 11.5V4M9 11.5V14L14.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <img src="nirvana-glyph.png" alt="Nirvana" style="filter: brightness(0) invert(1);">
         </div>
-        <span class="logo-wordmark">Nirvana</span>
+        <span class="logo-wordmark"><img src="nirvana-logo.svg" alt="Nirvana"></span>
       </div>
 
       <div class="sidebar-section">

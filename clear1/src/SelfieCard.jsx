@@ -95,7 +95,7 @@ export default function SelfieCard() {
           @keyframes fade-in{from{opacity:0}to{opacity:1}}
         `}</style>
         <div style={{ position: "absolute", inset: 0, zIndex: 50, background: "#000", animation: "fade-in 0.3s ease" }}>
-          <img src={`${import.meta.env.BASE_URL}fakeportrait.png`} alt="" style={{ position: "absolute", top: "-23%", left: "-10%", width: "126%", height: "141%", objectFit: "cover", objectPosition: "center top" }} />
+          <img src={`${import.meta.env.BASE_URL}fakeportrait.png`} alt="" style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", height: "100%", width: "auto" }} />
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 92, background: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%)", zIndex: 2 }} />
           <div style={{ position: "absolute", top: 60, right: 24, zIndex: 3 }}>
             <Icon name="fa-circle-question" weight="thin" size={24} style={{ color: T.white }} />

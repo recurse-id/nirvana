@@ -139,11 +139,13 @@
   }
 
   .gpt-orb {
-    width: 32px;
+    width: auto;
     height: 32px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 40% 35%, #FF6B8A, #FF4F7A 30%, #E8457A 60%, #A855F7 100%);
-    box-shadow: 0 2px 8px rgba(255,75,122,0.3);
+  }
+
+  .gpt-orb img {
+    height: 100%;
+    width: auto;
   }
 
   .chat-body {
@@ -306,22 +308,24 @@
   .nirvana-logo {
     width: 36px;
     height: 36px;
-    background: var(--nirvana-teal);
-    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: -0.02em;
+  }
+
+  .nirvana-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .nirvana-wordmark {
-    font-size: 20px;
-    font-weight: 700;
-    color: #111;
-    letter-spacing: -0.03em;
+    height: 14px;
+  }
+
+  .nirvana-wordmark img {
+    height: 100%;
+    width: auto;
   }
 
   .step-list {
@@ -397,21 +401,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 8px;
     letter-spacing: -0.01em;
   }
 
   .powered-by .mini-logo {
     width: 14px;
     height: 14px;
-    background: var(--nirvana-teal);
-    border-radius: 4px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 8px;
-    font-weight: 700;
   }
 
   /* Checkmark SVG */
@@ -932,7 +931,7 @@
 
       <!-- Chat Header -->
       <div class="chat-header">
-        <div class="gpt-orb"></div>
+        <div class="gpt-orb"><img src="amazone-one.png" alt="Amazon One"></div>
       </div>
 
       <!-- Chat Body -->
@@ -972,7 +971,7 @@
         </div>
       </div>
       <div class="chat-header">
-        <div class="gpt-orb"></div>
+        <div class="gpt-orb"><img src="amazone-one.png" alt="Amazon One"></div>
       </div>
       <div class="chat-body">
         <div class="msg msg-user" style="font-size:15px;">I've been having persistent knee pain for the past two weeks, especially when climbing stairs. It's a sharp pain on the outer side of my right knee.</div>
@@ -1016,7 +1015,7 @@
           </div>
         </div>
         <div class="chat-header">
-          <div class="gpt-orb"></div>
+          <div class="gpt-orb"><img src="amazone-one.png" alt="Amazon One"></div>
         </div>
         <div class="chat-body">
           <div class="msg msg-user" style="font-size:15px;">I've been having persistent knee pain...</div>
@@ -1032,8 +1031,8 @@
         <div class="sheet-handle"></div>
         <div class="sheet-content">
           <div class="nirvana-header">
-            <div class="nirvana-logo">N</div>
-            <div class="nirvana-wordmark">Nirvana</div>
+            <div class="nirvana-logo"><img src="nirvana-glyph.png" alt="Nirvana"></div>
+            <div class="nirvana-wordmark"><img src="nirvana-logo.svg" alt="Nirvana"></div>
           </div>
 
           <div class="step-list">
@@ -1055,7 +1054,7 @@
           </div>
 
           <div class="powered-by">
-            powered by <span class="mini-logo">N</span> <strong style="color:#6B7280;">Nirvana</strong>
+            Powered by <img src="nirvana-logo.svg" alt="Nirvana" style="height:11px;width:auto;opacity:0.5;"> <img src="amazone-one.png" alt="Amazon One" style="height:20px;width:auto;opacity:0.5;">
           </div>
         </div>
       </div>
@@ -1078,7 +1077,7 @@
           </div>
         </div>
         <div class="chat-header">
-          <div class="gpt-orb"></div>
+          <div class="gpt-orb"><img src="amazone-one.png" alt="Amazon One"></div>
         </div>
         <div class="chat-body">
           <div class="msg msg-user" style="font-size:15px;">I've been having persistent knee pain...</div>
@@ -1093,8 +1092,8 @@
         <div class="sheet-handle"></div>
         <div class="sheet-content">
           <div class="nirvana-header">
-            <div class="nirvana-logo">N</div>
-            <div class="nirvana-wordmark">Nirvana</div>
+            <div class="nirvana-logo"><img src="nirvana-glyph.png" alt="Nirvana"></div>
+            <div class="nirvana-wordmark"><img src="nirvana-logo.svg" alt="Nirvana"></div>
           </div>
 
           <div class="step-list">
@@ -1126,7 +1125,7 @@
           </div>
 
           <div class="powered-by">
-            powered by <span class="mini-logo">N</span> <strong style="color:#6B7280;">Nirvana</strong>
+            Powered by <img src="nirvana-logo.svg" alt="Nirvana" style="height:11px;width:auto;opacity:0.5;"> <img src="amazone-one.png" alt="Amazon One" style="height:20px;width:auto;opacity:0.5;">
           </div>
         </div>
       </div>
@@ -1148,7 +1147,7 @@
         </div>
       </div>
       <div class="chat-header">
-        <div class="gpt-orb"></div>
+        <div class="gpt-orb"><img src="amazone-one.png" alt="Amazon One"></div>
       </div>
       <div class="chat-body">
         <div class="msg msg-user" style="font-size:14.5px;">Yes, that would be great!</div>
@@ -1326,7 +1325,7 @@
             <svg viewBox="0 0 18 12"><path d="M0 0h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H0V0Z" fill="none" stroke="#fff" stroke-width="1.2"/><rect x="2" y="2.5" width="10" height="7" rx="1" fill="#fff"/><rect x="16.5" y="4" width="1.5" height="4" rx="0.5" fill="#fff"/></svg>
           </div>
         </div>
-        <div class="chat-header"><div class="gpt-orb"></div></div>
+        <div class="chat-header"><div class="gpt-orb"><img src="amazone-one.png" alt="Amazon One"></div></div>
         <div class="chat-body">
           <div class="msg msg-assistant" style="font-size:14px;">Here are 5 radiologists near you...</div>
         </div>
@@ -1383,7 +1382,7 @@
           <div class="continue-btn" style="background:var(--nirvana-teal);">Continue</div>
 
           <div class="powered-by">
-            powered by <span class="mini-logo">N</span> <strong style="color:#6B7280;">Nirvana</strong>
+            Powered by <img src="nirvana-logo.svg" alt="Nirvana" style="height:11px;width:auto;opacity:0.5;"> <img src="amazone-one.png" alt="Amazon One" style="height:20px;width:auto;opacity:0.5;">
           </div>
         </div>
       </div>
@@ -1405,7 +1404,7 @@
             <svg viewBox="0 0 18 12"><path d="M0 0h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H0V0Z" fill="none" stroke="#fff" stroke-width="1.2"/><rect x="2" y="2.5" width="10" height="7" rx="1" fill="#fff"/><rect x="16.5" y="4" width="1.5" height="4" rx="0.5" fill="#fff"/></svg>
           </div>
         </div>
-        <div class="chat-header"><div class="gpt-orb"></div></div>
+        <div class="chat-header"><div class="gpt-orb"><img src="amazone-one.png" alt="Amazon One"></div></div>
         <div class="chat-body">
           <div class="msg msg-assistant" style="font-size:14px;">Here are 5 radiologists near you...</div>
         </div>
@@ -1417,7 +1416,7 @@
           <!-- Appointment Summary -->
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
             <div style="display:flex;align-items:center;gap:10px;">
-              <div class="nirvana-logo" style="width:28px;height:28px;font-size:14px;border-radius:8px;">N</div>
+              <div class="nirvana-logo" style="width:28px;height:28px;"><img src="nirvana-glyph.png" alt="Nirvana"></div>
               <span style="font-size:16px;font-weight:600;color:#111;letter-spacing:-0.02em;">Book Appointment</span>
             </div>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/></svg>
@@ -1487,7 +1486,7 @@
           <div class="continue-btn dark">Book Appointment &mdash; $45.00</div>
 
           <div class="powered-by">
-            powered by <span class="mini-logo">N</span> <strong style="color:#6B7280;">Nirvana</strong>
+            Powered by <img src="nirvana-logo.svg" alt="Nirvana" style="height:11px;width:auto;opacity:0.5;"> <img src="amazone-one.png" alt="Amazon One" style="height:20px;width:auto;opacity:0.5;">
           </div>
         </div>
       </div>
@@ -1509,7 +1508,7 @@
         </div>
       </div>
       <div class="chat-header">
-        <div class="gpt-orb"></div>
+        <div class="gpt-orb"><img src="amazone-one.png" alt="Amazon One"></div>
       </div>
       <div class="chat-body">
         <div class="msg msg-user" style="font-size:14.5px;">Yes, that would be great!</div>
