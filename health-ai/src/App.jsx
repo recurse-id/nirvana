@@ -8,6 +8,33 @@ import BookingSheet from './BookingSheet'
 import PaymentSheet from './PaymentSheet'
 import DoctorCards from './DoctorCards'
 
+function Typewriter({ text, speed = 8 }) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    setCount(0)
+  }, [text])
+
+  useEffect(() => {
+    if (count >= text.length) return
+    const t = setTimeout(() => setCount(c => c + 1), speed)
+    return () => clearTimeout(t)
+  }, [count, text, speed])
+
+  const visible = text.slice(0, count)
+  const lines = visible.split('\n')
+
+  return <>{lines.map((line, li) => {
+    const parts = line.split(/(\*\*[^*]*\*?\*?)/)
+    const rendered = parts.map((part, pi) => {
+      const bold = part.match(/^\*\*(.+)\*\*$/)
+      if (bold) return <strong key={pi}>{bold[1]}</strong>
+      return part
+    })
+    return <span key={li}>{li > 0 && <br />}{rendered}</span>
+  })}</>
+}
+
 function AnimateIn({ children, delay = 0, style }) {
   const [visible, setVisible] = useState(false)
   useEffect(() => {
@@ -42,15 +69,19 @@ const STEPS = {
   CONFIRMATION: 11,
 }
 
+const AI_MSG_1 = "I'm sorry to hear about your knee pain. Based on what you're describing - sharp pain on the outer side of your right knee that worsens with stair climbing - this could be related to several conditions, including iliotibial band syndrome, a lateral meniscus issue, or possible ligament strain.\n\nIn this case, imaging would be really helpful. **Based on your symptoms, I suggest you consult a radiologist.** Would you like me to find some radiologists you can reach out to?"
+const AI_MSG_2 = "Here are 3 radiologists near you that accept your insurance and are available for booking via Nirvana:"
+const AI_MSG_3 = "Okay! Appointment is booked.\nYour appointment is with Dr. Priya Sharma, on Monday March 24 at 9:00AM. You will also shortly receive a confirmation email at **michael@dundermifflin.com**"
+
 const TIMINGS = {
   [STEPS.INITIAL]: 4000,
-  [STEPS.AI_RESPONSE]: 4000,
+  [STEPS.AI_RESPONSE]: 5000,
   [STEPS.USER_REPLY]: 1500,
   [STEPS.RETRIEVAL]: 2000,
   [STEPS.PROCESSING_1]: 2000,
   [STEPS.PROCESSING_2]: 2000,
   [STEPS.PROCESSING_3]: 2000,
-  [STEPS.RESULTS]: 3000,
+  [STEPS.RESULTS]: 4000,
   [STEPS.BOOKING]: 3000,
   [STEPS.PAYMENT_EMPTY]: 2000,
   [STEPS.PAYMENT_FILLED]: 2500,
@@ -154,13 +185,9 @@ export default function App() {
 
         {/* AI response */}
         {showAiResponse && (
-          <AnimateIn>
-            <div className="msg-ai">
-              I'm sorry to hear about your knee pain. Based on what you're describing - sharp pain on the outer side of your right knee that worsens with stair climbing - this could be related to several conditions, including iliotibial band syndrome, a lateral meniscus issue, or possible ligament strain.
-              <br /><br />
-              In this case, imaging would be really helpful. <strong>Based on your symptoms, I suggest you consult a radiologist.</strong> Would you like me to find some radiologists you can reach out to?
-            </div>
-          </AnimateIn>
+          <div className="msg-ai">
+            <Typewriter text={AI_MSG_1} />
+          </div>
         )}
 
         {/* User reply */}
@@ -184,7 +211,7 @@ export default function App() {
         {showResults && (
           <AnimateIn>
             <div className="msg-ai">
-              Here are 3 radiologists near you that accept your insurance and are available for booking via Nirvana:
+              <Typewriter text={AI_MSG_2} />
             </div>
             <div style={{ marginTop: 12 }}>
               <DoctorCards onBook={() => {}} showTap={showTap && step === STEPS.RESULTS} disabled={showConfirmation} />
@@ -196,8 +223,7 @@ export default function App() {
         {showConfirmation && (
           <AnimateIn>
             <div className="msg-ai">
-              Okay! Appointment is booked.<br />
-              Your appointment is with Dr. Priya Sharma, on Monday March 24 at 9:00AM. You will also shortly receive a confirmation email at <strong>michael@dundermifflin.com</strong>
+              <Typewriter text={AI_MSG_3} />
             </div>
           </AnimateIn>
         )}
