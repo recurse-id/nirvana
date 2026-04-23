@@ -143,7 +143,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", background: T.offWhite, minHeight: "100vh" }}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", background: "#061644", minHeight: "100vh" }}>
       {!started && (
         <button onClick={runDemo}
           style={{ position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)", zIndex: 100, background: T.navy, color: T.white, border: "none", borderRadius: 28, padding: "12px 32px", fontFamily: font, fontSize: 16, fontWeight: 600, cursor: "pointer", letterSpacing: "-0.02em", boxShadow: "0 4px 20px rgba(8,18,69,0.3)" }}>
