@@ -6,7 +6,6 @@ import VisitsScreen from "./VisitsScreen.jsx";
 import CoverageScreen from "./CoverageScreen.jsx";
 import AccountScreen from "./AccountScreen.jsx";
 import useTapRipple from "./TapRipple.jsx";
-import useRecorder from "./useRecorder.jsx";
 
 const TABS = [
   { id: "home", label: "Home", fa: "fa-house" },
@@ -44,7 +43,6 @@ export default function App() {
   const selfieRef = useRef(null);
   const homeScrollRef = useRef(null);
   const visitsRef = useRef(null);
-  const { startRecording, stopRecording } = useRecorder(phoneRef);
 
   const getElCenter = useCallback((selector) => {
     const phone = phoneRef.current;
@@ -82,7 +80,6 @@ export default function App() {
     setRunning(true);
     setStarted(true);
     setTab("home");
-    await startRecording();
     await sleep(1200);
 
     // 1. Tap "Ready to check in?" to expand
@@ -135,9 +132,8 @@ export default function App() {
     setTab("account");
     await sleep(1500);
 
-    await stopRecording();
     setRunning(false);
-  }, [tapEl, tapTabByIndex, startRecording, stopRecording]);
+  }, [tapEl, tapTabByIndex]);
 
   const screens = {
     home: <HomeScreen ref={homeScrollRef} selfieRef={selfieRef} onSelfieDone={() => {}} />,
