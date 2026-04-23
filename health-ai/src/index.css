@@ -614,7 +614,8 @@ html, body, #root {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  border: 2px solid #0E544E;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1);
@@ -631,6 +632,6 @@ html, body, #root {
 }
 
 @keyframes tapRing {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
   100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
 }
