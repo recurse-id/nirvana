@@ -65,9 +65,7 @@ export default function App() {
             const showBadge = t.id === "account" && visibleAlerts.length > 0 && !isActive;
             return (
               <button key={t.id} onClick={() => setTab(t.id)}
-                onFocus={e => e.currentTarget.style.outline = `2px solid ${T.navy}`}
-                onBlur={e => e.currentTarget.style.outline = "none"}
-                style={{ flex: 1, border: "none", background: "none", padding: "10px 0 4px", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 3, fontFamily: font, fontSize: 9, fontWeight: isActive ? 600 : 400, color: isActive ? T.navy : T.warmShadow, transition: `color ${motion}`, outline: "none", position: "relative" }}>
+                style={{ flex: 1, border: "none", background: "none", padding: "10px 0 4px", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 3, fontFamily: font, fontSize: 9, fontWeight: isActive ? 600 : 400, color: isActive ? T.navy : T.warmShadow, transition: `color ${motion}`, outline: "none", position: "relative", WebkitTapHighlightColor: "transparent" }}>
                 <div style={{ position: "relative" }}>
                   {t.customIcon ? (
                     <svg width="20" height="21" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
