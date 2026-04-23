@@ -7,12 +7,15 @@ export default function HomeScreen({ alerts, onDismiss }) {
   const homeAlert = alerts[0] ?? null;
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: "20px 20px 12px", display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div>
+      <div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <img src={`${import.meta.env.BASE_URL}clear-logo.svg`} alt="CLEAR" style={{ height: 24 }} />
+          <div style={{ width: 42, height: 42, borderRadius: "50%", background: T.blueWash, border: `1.5px solid ${T.navy}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: font, fontSize: 13, fontWeight: 600, color: T.navy, flexShrink: 0 }}>SW</div>
+        </div>
+        <div style={{ marginTop: 12 }}>
           <div style={{ fontFamily: font, fontSize: 13, color: T.navy }}>Welcome back,</div>
           <div style={{ fontFamily: font, fontSize: 28, fontWeight: 700, color: T.navy, letterSpacing: "-0.03em", lineHeight: 1.1 }}>Simon</div>
         </div>
-        <div style={{ width: 42, height: 42, borderRadius: "50%", background: T.blueWash, border: `1.5px solid ${T.navy}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: font, fontSize: 13, fontWeight: 600, color: T.navy, flexShrink: 0 }}>SW</div>
       </div>
 
       <SelfieCard />
