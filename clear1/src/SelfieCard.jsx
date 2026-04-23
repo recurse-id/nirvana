@@ -78,7 +78,7 @@ export default function SelfieCard() {
     const labels = { matching: "Matching your\ninformation", verifying: "Verifying your\nidentity", encrypting: "Encrypting your\ninformation" };
     return (
       <div style={{ position: "absolute", inset: 0, zIndex: 50, background: T.white, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 24 }}>
-        <img src={`${import.meta.env.BASE_URL}clear-logo.png`} alt="CLEAR" style={{ position: "absolute", top: 56, left: 32, height: 32 }} />
+        <img src={`${import.meta.env.BASE_URL}clear-logo.svg`} alt="CLEAR" style={{ position: "absolute", top: 56, left: 32, height: 32 }} />
         <PulsingRings />
         <div style={{ fontFamily: font, fontSize: 32, fontWeight: 700, color: T.textBlack, textAlign: "center", letterSpacing: "-0.03em", lineHeight: 1.1, whiteSpace: "pre-line", padding: "0 32px" }}>
           {labels[step]}
