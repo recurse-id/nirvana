@@ -1,4 +1,4 @@
-import { CheckIcon, InsuranceIcon, DollarIcon, CalendarIcon, NirvanaLogo } from './Icons'
+import { CheckIcon, InsuranceIcon, DollarIcon, CalendarIcon, NirvanaLogo, SpinningGlyph } from './Icons'
 
 const STEPS = [
   { label: 'Matching providers to your insurance', icon: InsuranceIcon },
@@ -20,7 +20,7 @@ export default function ProcessingSheet({ activeStep }) {
             <div key={i} className={`step-row ${state}`}>
               <div className={`step-icon ${state}`}>
                 {state === 'done' && <CheckIcon size={14} />}
-                {state === 'active' && <div className="pulse-dot" />}
+                {state === 'active' && <SpinningGlyph />}
                 {state === 'pending' && <step.icon />}
               </div>
               <span>{step.label}</span>
