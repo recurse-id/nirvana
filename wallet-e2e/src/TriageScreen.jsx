@@ -121,6 +121,7 @@ export default function TriageScreen({ onNavigate, onBookVisit }) {
   const [bookingDoctor, setBookingDoctor] = useState(null);
   const [paymentDoctor, setPaymentDoctor] = useState(null);
   const [confirmed, setConfirmed] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const chatRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -197,8 +198,33 @@ export default function TriageScreen({ onNavigate, onBookVisit }) {
         <div style={{ width: 32, height: 32, borderRadius: "50%", background: T.lilacLight, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="fa-sparkles" weight="solid" size={14} style={{ color: T.vibrantPurple }} />
         </div>
-        <div style={{ fontFamily: font, fontSize: 15, fontWeight: 600, color: T.deepPurple }}>Triage AI</div>
+        <div style={{ fontFamily: font, fontSize: 15, fontWeight: 600, color: T.deepPurple, flex: 1 }}>Triage AI</div>
+        <button onClick={() => setShowHistory(h => !h)} style={{ background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Icon name="fa-clock-rotate-left" weight={showHistory ? "solid" : "thin"} size={18} style={{ color: showHistory ? T.deepPurple : T.warmShadow }} />
+        </button>
       </div>
+
+      {showHistory && (
+        <div style={{ background: T.whitePurple, borderBottom: `1px solid ${T.lilacLight}`, padding: "12px 16px", flexShrink: 0, animation: "sheet-down 0.25s ease" }}>
+          <style>{`@keyframes sheet-down{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}`}</style>
+          <div style={{ fontFamily: font, fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: T.warmShadow, marginBottom: 10 }}>Past conversations</div>
+          {[
+            { title: "Headache & dizziness", date: "Apr 18, 2026", preview: "Recommended neurologist visit" },
+            { title: "Annual physical reminder", date: "Mar 2, 2026", preview: "Scheduled with Dr. Patel" },
+            { title: "Back pain follow-up", date: "Jan 15, 2026", preview: "Referred to physical therapy" },
+          ].map((conv, i) => (
+            <div key={i} style={{ padding: "10px 0", borderBottom: i < 2 ? `0.5px solid ${T.warmLight}` : "none", cursor: "pointer" }}
+              onMouseEnter={e => e.currentTarget.style.background = T.lilacLight}
+              onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: T.deepPurple }}>{conv.title}</span>
+                <span style={{ fontFamily: font, fontSize: 11, color: T.warmShadow }}>{conv.date}</span>
+              </div>
+              <div style={{ fontFamily: font, fontSize: 12, color: T.warmShadow, marginTop: 2 }}>{conv.preview}</div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div ref={chatRef} style={{ flex: 1, overflowY: "auto", padding: "16px 16px 8px", display: "flex", flexDirection: "column", gap: 12 }}>
         {showSuggestions && (
