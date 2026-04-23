@@ -8,7 +8,6 @@ import AccountScreen from "./AccountScreen.jsx";
 import Toast from "./Toast.jsx";
 
 const ALL_ALERTS = [
-  { id: 1, faIcon: "fa-clock", title: "Deductible in progress", body: "$300 remaining. After that, you pay only coinsurance.", action: "View details", iconBg: T.amber },
   { id: 2, faIcon: "fa-circle-check", title: "Coverage verified", body: "BCBS plan active. Urgent care copay: $40.", action: null, iconBg: T.green },
   { id: 3, faIcon: "fa-stopwatch", title: "Save time at your next visit", body: "Verify with a selfie — no paperwork needed.", action: null, iconBg: T.navy },
   { id: 4, faIcon: "fa-rotate", title: "Insurance may be inactive", body: "Update your insurance before your next visit.", action: "Update", iconBg: T.red },
