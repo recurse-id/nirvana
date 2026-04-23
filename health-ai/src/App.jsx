@@ -56,9 +56,23 @@ export default function App() {
   }, [step, paused])
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: 'smooth' })
-    }, 100)
+    const el = chatRef.current
+    if (!el) return
+    const start = el.scrollTop
+    const end = el.scrollHeight - el.clientHeight
+    const distance = end - start
+    if (distance <= 0) return
+    const duration = Math.min(600, Math.max(300, distance * 1.5))
+    let startTime = null
+    function animate(ts) {
+      if (!startTime) startTime = ts
+      const elapsed = ts - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const ease = 1 - Math.pow(1 - progress, 3)
+      el.scrollTop = start + distance * ease
+      if (progress < 1) requestAnimationFrame(animate)
+    }
+    const t = setTimeout(() => requestAnimationFrame(animate), 50)
     return () => clearTimeout(t)
   }, [step])
 
