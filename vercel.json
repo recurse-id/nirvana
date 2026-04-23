@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd pt-checkin && npm install && npm run build && cd .. && mkdir -p dist/pt-checkin && cp -r pt-checkin/dist/* dist/pt-checkin/",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/pt-checkin", "destination": "/pt-checkin/index.html" }
+  ]
+}
