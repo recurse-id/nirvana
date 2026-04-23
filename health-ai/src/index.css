@@ -139,7 +139,6 @@ html, body, #root {
   line-height: 1.45;
   color: var(--gray-900);
   max-width: 85%;
-  margin-right: 4px;
 }
 
 .msg-ai {
