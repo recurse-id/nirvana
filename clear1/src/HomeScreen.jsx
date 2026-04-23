@@ -40,7 +40,7 @@ export default function HomeScreen({ alerts, onDismiss }) {
       <Card>
         <SectionLabel dark>Shared at verification</SectionLabel>
         <div style={{ marginTop: 10 }}>
-          {[["Full name","Simon Wolf"],["Date of birth","07/22/1985"],["Member ID","BCBS-772-441-09"],["Address","5412 N Kedzie Ave, Chicago IL"],["Reason for visit","Sore throat, fever"],["Insurance","BCBS PPO · Active ✓"],["Copay","$40"]].map(([k,v],i,a) => (
+          {[["Full name","Simon Wolf"],["Date of birth","07/22/1985"],["Member ID","BCBS-772-441-09"],["Address","5412 N Kedzie Ave, Chicago IL"],["Insurance","BCBS PPO · Active ✓"],["Copay","$40"]].map(([k,v],i,a) => (
             <div key={k} style={{ display: "flex", justifyContent: "space-between", fontFamily: font, fontSize: 13, paddingBottom: 9, marginBottom: 9, borderBottom: i < a.length-1 ? `0.5px solid ${T.divider}` : "none" }}>
               <span style={{ color: T.warmShadow }}>{k}</span>
               <span style={{ color: v.includes("✓") ? T.green : T.navy, fontWeight: v.includes("✓") ? 600 : 400, textAlign: "right", maxWidth: "55%" }}>{v}</span>
