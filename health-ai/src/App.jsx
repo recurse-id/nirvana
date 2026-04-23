@@ -28,21 +28,25 @@ function AnimateIn({ children, delay = 0, style }) {
 }
 
 const STEPS = {
-  INITIAL_CHAT: 0,
-  USER_REPLY: 1,
-  RETRIEVAL: 2,
-  PROCESSING_1: 3,
-  PROCESSING_2: 4,
-  PROCESSING_3: 5,
-  RESULTS: 6,
-  BOOKING: 7,
-  PAYMENT_EMPTY: 8,
-  PAYMENT_FILLED: 9,
-  CONFIRMATION: 10,
+  EMPTY: 0,
+  USER_MSG: 1,
+  AI_RESPONSE: 2,
+  USER_REPLY: 3,
+  RETRIEVAL: 4,
+  PROCESSING_1: 5,
+  PROCESSING_2: 6,
+  PROCESSING_3: 7,
+  RESULTS: 8,
+  BOOKING: 9,
+  PAYMENT_EMPTY: 10,
+  PAYMENT_FILLED: 11,
+  CONFIRMATION: 12,
 }
 
 const TIMINGS = {
-  [STEPS.INITIAL_CHAT]: 3000,
+  [STEPS.EMPTY]: 4000,
+  [STEPS.USER_MSG]: 3000,
+  [STEPS.AI_RESPONSE]: 4000,
   [STEPS.USER_REPLY]: 1500,
   [STEPS.RETRIEVAL]: 2000,
   [STEPS.PROCESSING_1]: 2000,
@@ -56,7 +60,7 @@ const TIMINGS = {
 }
 
 export default function App() {
-  const [step, setStep] = useState(STEPS.INITIAL_CHAT)
+  const [step, setStep] = useState(STEPS.EMPTY)
   const [paused, setPaused] = useState(false)
   const [showTap, setShowTap] = useState(false)
   const chatRef = useRef(null)
@@ -81,7 +85,7 @@ export default function App() {
       setShowTap(false)
       if (step === STEPS.CONFIRMATION) {
         chatRef.current?.scrollTo({ top: 0 })
-        setStep(STEPS.INITIAL_CHAT)
+        setStep(STEPS.EMPTY)
       } else {
         setStep(s => s + 1)
       }
@@ -97,6 +101,8 @@ export default function App() {
     }, 150)
   }, [step])
 
+  const showUserMsg = step >= STEPS.USER_MSG
+  const showAiResponse = step >= STEPS.AI_RESPONSE
   const showSheet = step >= STEPS.PROCESSING_1 && step <= STEPS.PROCESSING_3
   const showResults = step >= STEPS.RESULTS
   const showBooking = step === STEPS.BOOKING
@@ -145,16 +151,24 @@ export default function App() {
         )}
 
         {/* User query */}
-        <div className="msg-user">
-          I've been having persistent knee pain for the past two weeks, especially when climbing stairs. It's a sharp pain on the outer side of my right knee.
-        </div>
+        {showUserMsg && (
+          <AnimateIn style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <div className="msg-user">
+              I've been having persistent knee pain for the past two weeks, especially when climbing stairs. It's a sharp pain on the outer side of my right knee.
+            </div>
+          </AnimateIn>
+        )}
 
         {/* AI response */}
-        <div className="msg-ai">
-          I'm sorry to hear about your knee pain. Based on what you're describing - sharp pain on the outer side of your right knee that worsens with stair climbing - this could be related to several conditions, including iliotibial band syndrome, a lateral meniscus issue, or possible ligament strain.
-          <br /><br />
-          In this case, imaging would be really helpful. <strong>Based on your symptoms, I suggest you consult a radiologist.</strong> Would you like me to find some radiologists you can reach out to?
-        </div>
+        {showAiResponse && (
+          <AnimateIn>
+            <div className="msg-ai">
+              I'm sorry to hear about your knee pain. Based on what you're describing - sharp pain on the outer side of your right knee that worsens with stair climbing - this could be related to several conditions, including iliotibial band syndrome, a lateral meniscus issue, or possible ligament strain.
+              <br /><br />
+              In this case, imaging would be really helpful. <strong>Based on your symptoms, I suggest you consult a radiologist.</strong> Would you like me to find some radiologists you can reach out to?
+            </div>
+          </AnimateIn>
+        )}
 
         {/* User reply */}
         {step >= STEPS.USER_REPLY && (
