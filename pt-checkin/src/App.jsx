@@ -50,17 +50,10 @@ export default function App() {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", padding: "24px 0", background: T.offWhite, minHeight: "100vh" }}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", background: T.offWhite, minHeight: "100vh" }}>
       <div style={{ width: 375, background: T.white, borderRadius: 40, overflow: "hidden", display: "flex", flexDirection: "column", height: 780, boxShadow: "0 24px 80px rgba(44,31,69,0.16)", position: "relative" }}>
 
-        <div style={{ background: T.white, padding: "12px 24px 8px", display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
-          <span style={{ fontFamily: font, fontSize: 13, fontWeight: 700, color: T.deepPurple }}>9:41</span>
-          <div style={{ width: 120, height: 20, background: T.deepPurple, borderRadius: 10 }} />
-          <div style={{ display: "flex", gap: 6, alignItems: "center", color: T.deepPurple }}>
-            <Icon name="fa-signal" weight="solid" size={13} />
-            <Icon name="fa-battery-three-quarters" weight="solid" size={13} />
-          </div>
-        </div>
+        <img src={`${import.meta.env.BASE_URL}ios-bar.svg`} alt="" style={{ width: 375, height: 45, flexShrink: 0, display: "block" }} />
 
         <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
           {screens[tab]}
