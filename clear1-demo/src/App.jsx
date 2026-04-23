@@ -91,9 +91,9 @@ export default function App() {
     await tapEl('[data-demo="selfie-continue"]', 600);
     selfieRef.current?.pressContinue();
 
-    // 3. Selfie capture screen stays for 2500ms, then interstitials auto-run
-    // Wait for capture(2500) + matching(2000) + verifying(2000) + encrypting(2000) + done
-    await sleep(2500 + 2000 + 2000 + 2000 + 800);
+    // 3. Selfie capture screen stays for 3500ms, then interstitials auto-run
+    // Wait for capture(3500) + matching(2000) + verifying(2000) + encrypting(2000) + done
+    await sleep(3500 + 2000 + 2000 + 2000 + 800);
 
     // 4. Now on home with "done" card. Scroll down to bottom.
     // 5. Scroll home to bottom

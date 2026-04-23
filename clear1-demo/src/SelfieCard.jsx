@@ -45,7 +45,7 @@ const SelfieCard = forwardRef(function SelfieCard({ onDone }, ref) {
 
   useEffect(() => {
     if (step === "capture") {
-      const t = setTimeout(() => setStep("matching"), 2500);
+      const t = setTimeout(() => setStep("matching"), 3500);
       return () => clearTimeout(t);
     }
     if (step === "matching") {
@@ -91,13 +91,18 @@ const SelfieCard = forwardRef(function SelfieCard({ onDone }, ref) {
   if (step === "matching" || step === "verifying" || step === "encrypting") {
     const labels = { matching: "Matching your\ninformation", verifying: "Verifying your\nidentity", encrypting: "Encrypting your\ninformation" };
     return (
-      <div style={{ position: "absolute", inset: 0, zIndex: 50, background: T.white, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 24 }}>
-        <img src={`${import.meta.env.BASE_URL}clear-logo.svg`} alt="CLEAR" style={{ position: "absolute", top: 56, left: 32, height: 32 }} />
-        <PulsingRings />
-        <div style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: 32, fontWeight: 700, color: T.textBlack, textAlign: "center", letterSpacing: "-0.03em", lineHeight: 1.1, whiteSpace: "pre-line", padding: "0 32px" }}>
-          {labels[step]}
+      <>
+        <style>{`
+          @keyframes float-in{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
+        `}</style>
+        <div style={{ position: "absolute", inset: 0, zIndex: 50, background: T.white, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 24 }}>
+          <img src={`${import.meta.env.BASE_URL}clear-logo.svg`} alt="CLEAR" style={{ position: "absolute", top: 56, left: 32, height: 32 }} />
+          <PulsingRings />
+          <div key={step} style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: 32, fontWeight: 700, color: T.textBlack, textAlign: "center", letterSpacing: "-0.03em", lineHeight: 1.1, whiteSpace: "pre-line", padding: "0 32px", animation: "float-in 0.5s ease-out" }}>
+            {labels[step]}
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
