@@ -7,11 +7,7 @@ import CoverageScreen from "./CoverageScreen.jsx";
 import AccountScreen from "./AccountScreen.jsx";
 import Toast from "./Toast.jsx";
 
-const ALL_ALERTS = [
-  { id: 2, faIcon: "fa-circle-check", title: "Coverage verified", body: "BCBS plan active. Urgent care copay: $40.", action: null, iconBg: T.green },
-  { id: 3, faIcon: "fa-stopwatch", title: "Save time at your next visit", body: "Verify with a selfie — no paperwork needed.", action: null, iconBg: T.navy },
-  { id: 4, faIcon: "fa-rotate", title: "Insurance may be inactive", body: "Update your insurance before your next visit.", action: "Update", iconBg: T.red },
-];
+const ALL_ALERTS = [];
 
 const TABS = [
   { id: "home", label: "Home", fa: "fa-house" },
