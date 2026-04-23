@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import {
   MenuIcon, EditIcon, CloseIcon, PlusIcon, MicIcon,
   SignalIcon, WifiIcon, BatteryIcon,
@@ -7,6 +7,30 @@ import ProcessingSheet from './ProcessingSheet'
 import BookingSheet from './BookingSheet'
 import PaymentSheet from './PaymentSheet'
 import DoctorCards from './DoctorCards'
+
+function SlideIn({ children }) {
+  const ref = useRef(null)
+  const [height, setHeight] = useState(0)
+
+  useEffect(() => {
+    if (!ref.current) return
+    const h = ref.current.scrollHeight
+    setHeight(h)
+  }, [])
+
+  return (
+    <div
+      style={{
+        maxHeight: height,
+        overflow: 'hidden',
+        transition: 'max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)',
+      }}
+      ref={ref}
+    >
+      {children}
+    </div>
+  )
+}
 
 const STEPS = {
   INITIAL_CHAT: 0,
@@ -58,22 +82,15 @@ export default function App() {
   useEffect(() => {
     const el = chatRef.current
     if (!el) return
-    const start = el.scrollTop
-    const end = el.scrollHeight - el.clientHeight
-    const distance = end - start
-    if (distance <= 0) return
-    const duration = Math.min(600, Math.max(300, distance * 1.5))
-    let startTime = null
-    function animate(ts) {
-      if (!startTime) startTime = ts
-      const elapsed = ts - startTime
-      const progress = Math.min(elapsed / duration, 1)
-      const ease = 1 - Math.pow(1 - progress, 3)
-      el.scrollTop = start + distance * ease
-      if (progress < 1) requestAnimationFrame(animate)
+    let cancelled = false
+    function keepAtBottom() {
+      if (cancelled) return
+      el.scrollTop = el.scrollHeight - el.clientHeight
+      requestAnimationFrame(keepAtBottom)
     }
-    const t = setTimeout(() => requestAnimationFrame(animate), 50)
-    return () => clearTimeout(t)
+    requestAnimationFrame(keepAtBottom)
+    const t = setTimeout(() => { cancelled = true }, 600)
+    return () => { cancelled = true; clearTimeout(t) }
   }, [step])
 
   const showSheet = step >= STEPS.PROCESSING_1 && step <= STEPS.PROCESSING_3
@@ -137,41 +154,45 @@ export default function App() {
 
         {/* User reply */}
         {step >= STEPS.USER_REPLY && (
-          <div className="msg-user fade-in">yes please</div>
+          <SlideIn key="user-reply">
+            <div className="msg-user">yes please</div>
+          </SlideIn>
         )}
 
         {/* Retrieval indicator */}
         {step === STEPS.RETRIEVAL && (
-          <div className="retrieval fade-in">
-            <div className="spinner" />
-            Retrieving your insurance information...
-          </div>
+          <SlideIn key="retrieval">
+            <div className="retrieval">
+              <div className="spinner" />
+              Retrieving your insurance information...
+            </div>
+          </SlideIn>
         )}
 
         {/* Doctor results */}
         {showResults && (
-          <>
-            <div className="msg-ai fade-in">
+          <SlideIn key="results">
+            <div className="msg-ai">
               Here are 3 radiologists near you that accept your insurance and are available for booking via Nirvana:
             </div>
             <DoctorCards onBook={() => {}} />
             <div style={{ minHeight: 130, flexShrink: 0 }} />
-          </>
+          </SlideIn>
         )}
 
         {/* Confirmation message */}
         {showConfirmation && (
-          <>
-            <div className="msg-ai fade-in">
+          <SlideIn key="confirmation">
+            <div className="msg-ai">
               Here are 3 radiologists near you that accept your insurance and are available for booking via Nirvana:
             </div>
             <DoctorCards onBook={() => {}} />
             <div style={{ minHeight: 130, flexShrink: 0 }} />
-            <div className="msg-ai fade-in">
+            <div className="msg-ai">
               Okay! Appointment is booked.<br />
               Your appointment is with Dr. Priya Sharma, on Monday March 24 at 9:00AM. You will also shortly receive a confirmation email at <strong>michael@dundermifflin.com</strong>
             </div>
-          </>
+          </SlideIn>
         )}
       </div>
 
