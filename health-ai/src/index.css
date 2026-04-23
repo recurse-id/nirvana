@@ -99,6 +99,16 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  --slide-offset: 0px;
+}
+
+.chat-area.chat-slide > * {
+  animation: chatSlideUp 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+@keyframes chatSlideUp {
+  from { transform: translateY(var(--slide-offset)); }
+  to { transform: translateY(0); }
 }
 
 .identifier-bar {
@@ -560,14 +570,6 @@ html, body, #root {
   color: var(--gray-400);
 }
 
-.fade-in {
-  animation: messageFadeIn 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) both;
-}
-
-@keyframes messageFadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 
 .step-icon.active .pulse-dot {
   width: 10px;

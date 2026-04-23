@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import {
   MenuIcon, EditIcon, CloseIcon, PlusIcon, MicIcon,
   SignalIcon, WifiIcon, BatteryIcon,
@@ -7,30 +7,6 @@ import ProcessingSheet from './ProcessingSheet'
 import BookingSheet from './BookingSheet'
 import PaymentSheet from './PaymentSheet'
 import DoctorCards from './DoctorCards'
-
-function SlideIn({ children }) {
-  const ref = useRef(null)
-  const [height, setHeight] = useState(0)
-
-  useEffect(() => {
-    if (!ref.current) return
-    const h = ref.current.scrollHeight
-    setHeight(h)
-  }, [])
-
-  return (
-    <div
-      style={{
-        maxHeight: height,
-        overflow: 'hidden',
-        transition: 'max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)',
-      }}
-      ref={ref}
-    >
-      {children}
-    </div>
-  )
-}
 
 const STEPS = {
   INITIAL_CHAT: 0,
@@ -65,11 +41,20 @@ export default function App() {
   const [paused, setPaused] = useState(false)
   const chatRef = useRef(null)
 
+  const snapshotRef = useRef({ scrollHeight: 0, scrollTop: 0 })
+
   useEffect(() => {
     if (paused) return
     const delay = TIMINGS[step]
     if (delay == null) return
     const t = setTimeout(() => {
+      const el = chatRef.current
+      if (el) {
+        snapshotRef.current = {
+          scrollHeight: el.scrollHeight,
+          scrollTop: el.scrollTop,
+        }
+      }
       if (step === STEPS.CONFIRMATION) {
         setStep(STEPS.INITIAL_CHAT)
       } else {
@@ -79,19 +64,21 @@ export default function App() {
     return () => clearTimeout(t)
   }, [step, paused])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = chatRef.current
     if (!el) return
-    let cancelled = false
-    function keepAtBottom() {
-      if (cancelled) return
-      el.scrollTop = el.scrollHeight - el.clientHeight
-      requestAnimationFrame(keepAtBottom)
-    }
-    requestAnimationFrame(keepAtBottom)
-    const t = setTimeout(() => { cancelled = true }, 600)
-    return () => { cancelled = true; clearTimeout(t) }
-  }, [step])
+    const { scrollHeight: oldSH } = snapshotRef.current
+    const newSH = el.scrollHeight
+    const diff = newSH - oldSH
+    if (diff <= 0 || oldSH === 0) return
+
+    el.style.setProperty('--slide-offset', `${diff}px`)
+    el.classList.remove('chat-slide')
+    void el.offsetHeight
+    el.classList.add('chat-slide')
+
+    el.scrollTop = el.scrollHeight - el.clientHeight
+  })
 
   const showSheet = step >= STEPS.PROCESSING_1 && step <= STEPS.PROCESSING_3
   const showResults = step >= STEPS.RESULTS && step !== STEPS.CONFIRMATION
@@ -131,7 +118,7 @@ export default function App() {
       <div className="chat-area" ref={chatRef}>
         {/* Identifier bar - only on screen 1 */}
         {step === STEPS.INITIAL_CHAT && (
-          <div className="identifier-bar fade-in">
+          <div className="identifier-bar">
             <div className="identifier-avatar">M</div>
             <span className="identifier-name">Michael</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -141,12 +128,12 @@ export default function App() {
         )}
 
         {/* User query */}
-        <div className="msg-user fade-in">
+        <div className="msg-user">
           I've been having persistent knee pain for the past two weeks, especially when climbing stairs. It's a sharp pain on the outer side of my right knee.
         </div>
 
         {/* AI response */}
-        <div className="msg-ai fade-in">
+        <div className="msg-ai">
           I'm sorry to hear about your knee pain. Based on what you're describing - sharp pain on the outer side of your right knee that worsens with stair climbing - this could be related to several conditions, including iliotibial band syndrome, a lateral meniscus issue, or possible ligament strain.
           <br /><br />
           In this case, imaging would be really helpful. <strong>Based on your symptoms, I suggest you consult a radiologist.</strong> Would you like me to find some radiologists you can reach out to?
@@ -154,45 +141,41 @@ export default function App() {
 
         {/* User reply */}
         {step >= STEPS.USER_REPLY && (
-          <SlideIn key="user-reply">
-            <div className="msg-user">yes please</div>
-          </SlideIn>
+          <div className="msg-user" key="user-reply">yes please</div>
         )}
 
         {/* Retrieval indicator */}
         {step === STEPS.RETRIEVAL && (
-          <SlideIn key="retrieval">
-            <div className="retrieval">
-              <div className="spinner" />
-              Retrieving your insurance information...
-            </div>
-          </SlideIn>
+          <div className="retrieval" key="retrieval">
+            <div className="spinner" />
+            Retrieving your insurance information...
+          </div>
         )}
 
         {/* Doctor results */}
         {showResults && (
-          <SlideIn key="results">
-            <div className="msg-ai">
+          <>
+            <div className="msg-ai" key="results-msg">
               Here are 3 radiologists near you that accept your insurance and are available for booking via Nirvana:
             </div>
             <DoctorCards onBook={() => {}} />
             <div style={{ minHeight: 130, flexShrink: 0 }} />
-          </SlideIn>
+          </>
         )}
 
         {/* Confirmation message */}
         {showConfirmation && (
-          <SlideIn key="confirmation">
-            <div className="msg-ai">
+          <>
+            <div className="msg-ai" key="confirm-results">
               Here are 3 radiologists near you that accept your insurance and are available for booking via Nirvana:
             </div>
             <DoctorCards onBook={() => {}} />
             <div style={{ minHeight: 130, flexShrink: 0 }} />
-            <div className="msg-ai">
+            <div className="msg-ai" key="confirm-msg">
               Okay! Appointment is booked.<br />
               Your appointment is with Dr. Priya Sharma, on Monday March 24 at 9:00AM. You will also shortly receive a confirmation email at <strong>michael@dundermifflin.com</strong>
             </div>
-          </SlideIn>
+          </>
         )}
       </div>
 
