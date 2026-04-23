@@ -14,11 +14,14 @@ const TYPE_ICONS = { "Ear infection": "fa-stethoscope", "X-ray – wrist": "fa-x
 
 function VisitCard({ v, isOpen, toggle }) {
   return (
+    <>
+      {v.isNew && <style>{`@keyframes new-pulse{0%,100%{box-shadow:0 0 0 0 rgba(44,31,69,0.4)}50%{box-shadow:0 0 0 4px rgba(44,31,69,0.12)}}`}</style>}
     <div style={{ background: T.white, border: `1px solid ${isOpen ? T.lilac : T.warmLight}`, borderRadius: r.lg + 2, overflow: "hidden", transition: `border-color ${motion}` }}>
       <HoverRow onClick={toggle} style={{ padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ width: 36, height: 36, borderRadius: r.md, background: isOpen ? T.lilacLight : T.offWhite, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: `background ${motion}` }}>
+          <div style={{ width: 36, height: 36, borderRadius: r.md, background: isOpen ? T.lilacLight : T.offWhite, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: `background ${motion}`, position: "relative" }}>
             <Icon name={TYPE_ICONS[v.type] || "fa-hospital"} weight="thin" size={16} style={{ color: isOpen ? T.deepPurple : T.warmShadow }} />
+            {v.isNew && <div style={{ position: "absolute", top: -3, left: -3, width: 10, height: 10, borderRadius: "50%", background: T.deepPurple, border: `2px solid ${T.white}`, animation: "new-pulse 2s ease-in-out infinite" }} />}
           </div>
           <div>
             <div style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: T.deepPurple }}>{v.type}</div>
@@ -45,6 +48,7 @@ function VisitCard({ v, isOpen, toggle }) {
         </div>
       )}
     </div>
+    </>
   );
 }
 

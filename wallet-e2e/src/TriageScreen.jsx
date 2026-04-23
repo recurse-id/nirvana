@@ -186,7 +186,7 @@ export default function TriageScreen({ onNavigate, onBookVisit }) {
     setConfirmed(true);
     const today = new Date();
     const dateStr = today.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-    onBookVisit?.({ date: dateStr, loc: doc.address, type: "Radiology consult", copay: "$45", docs: [], doctorName: doc.name });
+    onBookVisit?.({ date: dateStr, loc: doc.address, type: "Radiology consult", copay: "$45", docs: [], doctorName: doc.name, isNew: true });
     setMessages(m => [...m, { role: "ai", text: `Appointment booked! You're seeing **${doc.name}** on Monday, March 24 at 9:00 AM.\n\nA confirmation has been sent to **sandra.w@email.com**. You can view it in your Visits tab.`, typewrite: true }]);
   }
 
