@@ -41,7 +41,7 @@ function App() {
             <div
               className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
             >
-              <span className="text-xs font-mono tracking-[0.25em] uppercase text-white/60">
+              <span className="text-xs font-mono tracking-[0.25em] uppercase text-white/60 glow-on-hover">
                 By Invitation Only
               </span>
             </div>
@@ -51,11 +51,11 @@ function App() {
             <img
               src={nirvanaLogo}
               alt="Nirvana"
-              className="h-5 mx-auto opacity-60"
+              className="h-5 mx-auto opacity-60 glow-on-hover-img"
             />
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.1]">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.1] glow-on-hover">
             Healthcare AI
             <br />
             <span className="font-normal bg-gradient-to-r from-blue-300 via-sky-200 to-blue-400 bg-clip-text text-transparent">
@@ -67,7 +67,7 @@ function App() {
             className="mt-10 max-w-lg mx-auto"
             style={{ animation: "fadeInSlow 1.2s ease-out 0.3s both" }}
           >
-            <p className="text-base sm:text-lg text-white leading-relaxed">
+            <p className="text-base sm:text-lg text-white leading-relaxed glow-on-hover">
               Join CFOs, RCM leaders, alongside AI leaders from OpenAI, Anthropic
               and more at this intimate dinner to trade notes and discuss how to
               improve healthcare revenue operations.
@@ -78,7 +78,7 @@ function App() {
             className="mt-12 flex flex-col items-center gap-6"
             style={{ animation: "fadeInSlow 1.2s ease-out 0.5s both" }}
           >
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-sm font-mono tracking-wider uppercase text-white/60">
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-sm font-mono tracking-wider uppercase text-white/60 glow-on-hover">
               <span>July 23, 2025</span>
               <span className="hidden sm:block w-1 h-1 rounded-full bg-white/20" />
               <span>3:00 PM &ndash; 9:00 PM</span>
@@ -94,7 +94,7 @@ function App() {
               RSVP
             </Button>
 
-            <p className="text-xs font-mono text-gray-400 tracking-wider">
+            <p className="text-xs font-mono text-gray-400 tracking-wider glow-on-hover">
               Please RSVP by May 15, 2025
             </p>
           </div>
