@@ -1,4 +1,4 @@
-import { useState, Suspense } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { GenerativeArtScene } from "@/components/ui/anomalous-matter-hero";
 import nirvanaLogo from "/nirvana-logo.svg";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,42 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+function TextGlow({ children }: { children: React.ReactNode }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current || !glowRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      glowRef.current.style.maskImage = `radial-gradient(circle 120px at ${x}px ${y}px, black 0%, transparent 100%)`;
+      glowRef.current.style.webkitMaskImage = `radial-gradient(circle 120px at ${x}px ${y}px, black 0%, transparent 100%)`;
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative">
+      {children}
+      <div
+        ref={glowRef}
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          maskImage: "radial-gradient(circle 120px at -200px -200px, black 0%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(circle 120px at -200px -200px, black 0%, transparent 100%)",
+          filter: "drop-shadow(0 0 12px rgba(255,255,255,0.8)) drop-shadow(0 0 30px rgba(255,255,255,0.3))",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -30,74 +66,72 @@ function App() {
 
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30 z-10" />
 
-
-
       <div className="relative z-20 flex flex-col items-center justify-center min-h-screen px-6">
         <div
           className="max-w-2xl mx-auto text-center"
           style={{ animation: "fadeIn 1s ease-out forwards" }}
         >
-          <div className="mb-8">
-            <div
-              className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
-            >
-              <span className="text-xs font-mono tracking-[0.25em] uppercase text-white/60 glow-on-hover">
-                By Invitation Only
+          <TextGlow>
+            <div className="mb-8">
+              <div className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
+                <span className="text-xs font-mono tracking-[0.25em] uppercase text-white/60">
+                  By Invitation Only
+                </span>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <img
+                src={nirvanaLogo}
+                alt="Nirvana"
+                className="h-5 mx-auto opacity-60"
+              />
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.1]">
+              Healthcare AI
+              <br />
+              <span className="font-normal bg-gradient-to-r from-blue-300 via-sky-200 to-blue-400 bg-clip-text text-transparent">
+                Executive Dinner
               </span>
-            </div>
-          </div>
+            </h1>
 
-          <div className="mb-4">
-            <img
-              src={nirvanaLogo}
-              alt="Nirvana"
-              className="h-5 mx-auto opacity-60 glow-on-hover-img"
-            />
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.1] glow-on-hover">
-            Healthcare AI
-            <br />
-            <span className="font-normal bg-gradient-to-r from-blue-300 via-sky-200 to-blue-400 bg-clip-text text-transparent">
-              Executive Dinner
-            </span>
-          </h1>
-
-          <div
-            className="mt-10 max-w-lg mx-auto"
-            style={{ animation: "fadeInSlow 1.2s ease-out 0.3s both" }}
-          >
-            <p className="text-base sm:text-lg text-white leading-relaxed glow-on-hover">
-              Join CFOs, RCM leaders, alongside AI leaders from OpenAI, Anthropic
-              and more at this intimate dinner to trade notes and discuss how to
-              improve healthcare revenue operations.
-            </p>
-          </div>
-
-          <div
-            className="mt-12 flex flex-col items-center gap-6"
-            style={{ animation: "fadeInSlow 1.2s ease-out 0.5s both" }}
-          >
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-sm font-mono tracking-wider uppercase text-white/60 glow-on-hover">
-              <span>July 23, 2025</span>
-              <span className="hidden sm:block w-1 h-1 rounded-full bg-white/20" />
-              <span>3:00 PM &ndash; 9:00 PM</span>
-              <span className="hidden sm:block w-1 h-1 rounded-full bg-white/20" />
-              <span>New York City</span>
-            </div>
-
-            <Button
-              onClick={() => setOpen(true)}
-              size="lg"
-              className="mt-4 relative px-10 py-6 text-sm font-mono tracking-[0.15em] uppercase bg-white text-black hover:bg-white/90 rounded-full transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] cursor-pointer"
+            <div
+              className="mt-10 max-w-lg mx-auto"
+              style={{ animation: "fadeInSlow 1.2s ease-out 0.3s both" }}
             >
-              RSVP
-            </Button>
+              <p className="text-base sm:text-lg text-white leading-relaxed">
+                Join CFOs, RCM leaders, alongside AI leaders from OpenAI, Anthropic
+                and more at this intimate dinner to trade notes and discuss how to
+                improve healthcare revenue operations.
+              </p>
+            </div>
 
-            <p className="text-xs font-mono text-gray-400 tracking-wider glow-on-hover">
-              Please RSVP by May 15, 2025
-            </p>
-          </div>
+            <div
+              className="mt-12 flex flex-col items-center gap-6"
+              style={{ animation: "fadeInSlow 1.2s ease-out 0.5s both" }}
+            >
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-sm font-mono tracking-wider uppercase text-white/60">
+                <span>July 23, 2025</span>
+                <span className="hidden sm:block w-1 h-1 rounded-full bg-white/20" />
+                <span>3:00 PM &ndash; 9:00 PM</span>
+                <span className="hidden sm:block w-1 h-1 rounded-full bg-white/20" />
+                <span>New York City</span>
+              </div>
+
+              <Button
+                onClick={() => setOpen(true)}
+                size="lg"
+                className="mt-4 relative px-10 py-6 text-sm font-mono tracking-[0.15em] uppercase bg-white text-black hover:bg-white/90 rounded-full transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] cursor-pointer"
+              >
+                RSVP
+              </Button>
+
+              <p className="text-xs font-mono text-gray-400 tracking-wider">
+                Please RSVP by May 15, 2025
+              </p>
+            </div>
+          </TextGlow>
         </div>
       </div>
 

@@ -137,19 +137,3 @@ body {
     @apply font-sans;
   }
 }
-
-.glow-on-hover {
-  transition: text-shadow 0.3s ease, filter 0.3s ease;
-}
-
-.glow-on-hover:hover {
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.2);
-}
-
-.glow-on-hover-img {
-  transition: filter 0.3s ease;
-}
-
-.glow-on-hover-img:hover {
-  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.5));
-}
