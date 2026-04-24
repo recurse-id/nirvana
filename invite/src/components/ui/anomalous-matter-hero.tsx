@@ -123,11 +123,14 @@ export function GenerativeArtScene() {
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
+    const targetRotX = { value: 0 };
+    const targetRotY = { value: 0 };
+
     let frameId: number;
     const animate = (t: number) => {
       material.uniforms.time.value = t * 0.0003;
-      mesh.rotation.y += 0.0005;
-      mesh.rotation.x += 0.0002;
+      mesh.rotation.y += 0.0005 + (targetRotY.value - mesh.rotation.y) * 0.03;
+      mesh.rotation.x += 0.0002 + (targetRotX.value - mesh.rotation.x) * 0.03;
       renderer.render(scene, camera);
       frameId = requestAnimationFrame(animate);
     };
@@ -143,6 +146,8 @@ export function GenerativeArtScene() {
     const handleMouseMove = (e: MouseEvent) => {
       mousePos.x = (e.clientX / window.innerWidth) * 2 - 1;
       mousePos.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      targetRotY.value = mousePos.x * 0.4;
+      targetRotX.value = -mousePos.y * 0.3;
     };
 
     window.addEventListener("resize", handleResize);
