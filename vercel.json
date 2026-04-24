@@ -1,7 +1,14 @@
 {
   "buildCommand": "bash build.sh",
   "outputDirectory": "dist",
-"rewrites": [
+  "redirects": [
+    {
+      "source": "/invite",
+      "destination": "https://aidininner2026.meetnirvana.com",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
     { "source": "/pt-checkin", "destination": "/pt-checkin/index.html" },
     { "source": "/clear1", "destination": "/clear1/index.html" },
     { "source": "/amazon", "destination": "/amazon/index.html" },
